@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All reactives</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" />
+</head>
+<body>
+
+<header>
+    <img th:src="@{/images/PharmaReactives-logo.png}"/>
+</header>
+<hr/>
+<main>
+    <table class="table">
+        <tr>
+            <th>Name of reactive</th>
+        </tr>
+        <tr th:each="reactive : ${reactives}">
+            <td>
+                <a th:href="@{/reactives/{id}(id=${reactive.getId()})}" th:text="${reactive.getName()}">reactive</a>
+            </td>
+
+        </tr>
+    </table>
+</main>
+
+<br/>
+<hr/>
+
+<a href="/reactives/new">Create new reactive</a>
+
+
+</body>
+</html>
