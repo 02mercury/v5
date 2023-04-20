@@ -28,7 +28,6 @@ public class Reactive {
     private Unit measure_unit;
 
     public Reactive(){
-        this.id = 1;
         this.stock = 0;
         this.price = 0;
         this.measure_unit = Unit.KG;

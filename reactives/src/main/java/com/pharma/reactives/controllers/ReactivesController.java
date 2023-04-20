@@ -1,7 +1,7 @@
 package com.pharma.reactives.controllers;
 
-import com.pharma.reactives.dao.ReactiveDAO;
 import com.pharma.reactives.models.Reactive;
+import com.pharma.reactives.services.ReactiveService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,23 +12,23 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/reactives")
 public class ReactivesController {
-    private final ReactiveDAO reactiveDAO;
+    private final ReactiveService reactiveService;
 
     @Autowired
-    public ReactivesController(ReactiveDAO reactiveDAO){
-        this.reactiveDAO = reactiveDAO;
+    public ReactivesController(ReactiveService reactiveService){
+        this.reactiveService = reactiveService;
     }
 
     @GetMapping()
     public String getAll(Model model){
-        model.addAttribute("reactives", reactiveDAO.getAll());
+        model.addAttribute("reactives", reactiveService.findAll());
         return "reactives/index";
     }
 
     @GetMapping("/{id}")
     public String getById(@PathVariable("id") int id,
                           Model model){
-        model.addAttribute("reactive", reactiveDAO.getById(id));
+        model.addAttribute("reactive", reactiveService.findOne(id));
         return "reactives/show";
     }
 
@@ -39,27 +39,27 @@ public class ReactivesController {
 
     @PostMapping()
     public String create(@ModelAttribute("reactive") Reactive reactive){
-        reactiveDAO.save(reactive);
+        reactiveService.save(reactive);
         return "redirect:/reactives";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") int id,
                        Model model){
-        model.addAttribute("reactive", reactiveDAO.getById(id));
+        model.addAttribute("reactive", reactiveService.findOne(id));
         return "reactives/edit";
     }
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("reactive") Reactive reactive,
                          @PathVariable("id") int id){
-        reactiveDAO.update(id, reactive);
+        reactiveService.update(id, reactive);
         return "redirect:/reactives";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id){
-        reactiveDAO.delete(id);
+        reactiveService.delete(id);
         return "redirect:/reactives";
     }
 }
